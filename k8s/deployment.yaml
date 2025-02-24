@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-ci-cd
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-ci-cd
+  template:
+    metadata:
+      labels:
+        app: devops-ci-cd
+    spec:
+      containers:
+        - name: devops-ci-cd
+          image: ankilshah/devops-ci-cd:latest
+          ports:
+            - containerPort: 3000

@@ -15,14 +15,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Docker
+      - name: Build Docker image
         run: |
-          docker build -t my-app .
-          
-      - name: Run tests
-        run: |
-          echo "Running tests..."
-          # Add your test commands here
+          docker build -t devops-ci-cd .
+          docker tag devops-ci-cd YOUR_DOCKER_USERNAME/devops-ci-cd:latest
 
-      - name: Deploy (placeholder)
-        run: echo "Deploy step (to be configured)"
+      - name: Push to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push YOUR_DOCKER_USERNAME/devops-ci-cd:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBECONFIG }}" > kubeconfig
+          export KUBECONFIG=./kubeconfig
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+
+      - name: Terraform Apply
+        run: |
+          cd terraform
+          terraform init
+          terraform apply -auto-approve

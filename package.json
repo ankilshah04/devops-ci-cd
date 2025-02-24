@@ -1,0 +1,25 @@
+{
+  "name": "devops-ci-cd",
+  "version": "1.0.0",
+  "description": "A project to design the most effective CI/CD pipeline",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ankilshah04/devops-ci-cd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ankilshah04/devops-ci-cd/issues"
+  },
+  "homepage": "https://github.com/ankilshah04/devops-ci-cd#readme",
+  "dependencies": {
+    "all": "^0.0.0",
+    "express": "^4.21.2"
+  }
+}
